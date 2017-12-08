@@ -1,3 +1,10 @@
 extends layout
 block content
-  <h1> The page is alive <h1>
+  div.main-container
+    header.main-header
+      h1 get [sh]it done
+    h2 To do...
+    div#todo-container
+      div#todo-input-container
+        button(class="todo-input-button" id="new-todo-btn") do some shit
+        input(type="text" class="todo-input hidden" id="new-todo-npt")

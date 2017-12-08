@@ -1,11 +1,12 @@
-// server.js
 // Basic Dependancies & App Initialization
 const path = require("path");
 const express = require('express');
-// const session = require("express-session");
+const session = require("express-session");
 const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const logger = require("morgan");
+const mongoose = require("mongoose");
+mongoose.Promise = Promise;
 const app = express();
 
 // Setting view engine
@@ -18,6 +19,11 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(bodyParser.text());
+const mongooseOptions = {
+  useMongoClient: true
+};
+mongoose.connect("mongodb://localhost/todo", mongooseOptions);
 
 // Set Routes
 const index = require(path.join(__dirname, '/routes/index'));
