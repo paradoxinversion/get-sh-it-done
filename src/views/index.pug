@@ -1,9 +1,11 @@
 extends layout
 block content
+  include includes/modal
   div.main-container
     header.main-header
-      h1 get [sh]it done
-    h2 To do...
+      h1(class="logo") get [sh]it done
+    //- include includes/auth
+    div#root
     div#todo-container
       div#todo-input-container
         button(class="todo-input-button" id="new-todo-btn") do some shit

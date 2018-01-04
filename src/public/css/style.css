@@ -8,14 +8,16 @@ body{
 h1 {
   font-size: 32px;
 }
-.hidden{
-  display: none;
+.logo{
+  margin-bottom: 1rem;
 }
 .main-header{
   text-align: center;
 }
 
 .main-container{
+  display: flex;
+  flex-direction: column;
   width: 80%;
   margin: 0 auto;
 }
@@ -66,11 +68,48 @@ h1 {
   margin-right: auto;
   align-self: center;
   max-width: 80%;
+}
 
+.task-complete {
+  background-color: grey;
+  text-decoration: line-through;
 }
 .delete-task-btn{
   margin:0 1rem;
+  text-decoration: none;
 }
-.task-complete {
-  background-color: red;
+
+.modal-container{
+  background-color: grey;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-form-container{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.vertical-form{
+  display: inherit;
+  flex-direction: column
+}
+
+.auth-container{
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  width: 25%;
+  margin-bottom: 1rem;
+}
+
+
+.hidden{
+  display: none;
 }
