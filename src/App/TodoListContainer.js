@@ -1,6 +1,7 @@
 import React from 'react';
 import MutableFieldButton from './MutableFieldButton';
 import MutableTaskList from './MutableTaskList';
+
 class TodoListContainer extends React.Component{
   constructor(props){
     super(props);
@@ -29,12 +30,12 @@ class TodoListContainer extends React.Component{
         return response.json();
       })
       .then((taskjson) => {
-        // The container should be updated here
         this.setState({
           taskData: taskjson
         })
       });
   }
+
   handleToDoCompletion(taskId){
     fetch(`http://localhost:3000/tasks/complete/${taskId}`, {
       method: "get"
@@ -48,7 +49,7 @@ class TodoListContainer extends React.Component{
         })
       })
   }
-  
+
   handleTaskDeletion(taskId){
     fetch(`http://localhost:3000/tasks/delete/${taskId}`, {
       method: "get"
@@ -57,7 +58,6 @@ class TodoListContainer extends React.Component{
         return response.json();
       })
       .then((taskjson) => {
-        // updateContainer(taskjson);
         this.setState({
           taskData: taskjson
         })
@@ -109,4 +109,5 @@ class TodoListContainer extends React.Component{
     }
   }
 }
+
 export default TodoListContainer;

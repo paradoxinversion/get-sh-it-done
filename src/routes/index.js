@@ -3,7 +3,7 @@ const router = express.Router();
 const Task = require("../models/Task");
 const User = require("../controllers/User");
 const passport = require("passport");
-// Main Index Route
+
 router.get("/", (req, res) => {
   // console.log("Authenticated Status::", req.isAuthenticated());
   // if (req.isAuthenticated()){
@@ -28,7 +28,6 @@ router.get("/tasks", (req, res) => {
   } else{
     res.redirect(`/${req.session.passport.user}/tasks`);
   }
-
 });
 
 router.get("/:userId/tasks", (req, res) => {
@@ -110,7 +109,6 @@ router.put("/tasks/edit/:taskId", (req, res) => {
         });
     });
 });
-
 
 router.post("/sign-up", passport.authenticate("local-signup"), function(req, res){
   res.send("woot");
