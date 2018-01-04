@@ -34,8 +34,6 @@ router.get("/tasks", (req, res) => {
 router.get("/:userId/tasks", (req, res) => {
   User.findById(req.params.userId)
     .then(user => {
-      console.log("user to get tasks:", user);
-      console.log("tasks", user.tasks);
       res.send(user.tasks);
     });
 });
@@ -74,7 +72,9 @@ router.get("/tasks/complete/:taskId", (req, res) => {
         .then(()=>{
           // res.json(task);
           return Task.find()
-            .then(tasks => tasks)
+            .then(tasks => {
+              res.json(tasks);
+            })
         })
         .catch(e => {
           throw e;

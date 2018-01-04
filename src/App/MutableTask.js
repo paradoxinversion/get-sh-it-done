@@ -16,10 +16,12 @@ class MutableTask extends React.Component {
       isChecked: !this.state.isChecked
     })
   }
+
   handleComplete(){
     this.props.onTaskCompleted(this.props.task._id)
     this.toggleCheckbox();
   }
+
   handleDelete(event){
     this.props.onTaskDeleted(this.props.task._id)
   }
@@ -30,7 +32,7 @@ class MutableTask extends React.Component {
           type="checkbox"
           className="todo-checkbox"
           onChange={this.handleComplete}
-          checked={this.state.isChecked}/>
+          checked={this.props.task.complete}/>
         <p className="todo-text">{this.props.task.description}</p>
         <input className="hidden" />
         <button className="delete-task-btn" onClick={this.handleDelete}> Delete </button>
