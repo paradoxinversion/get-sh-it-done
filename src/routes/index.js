@@ -26,14 +26,20 @@ router.get("/tasks", (req, res) => {
         res.json(tasks);
       });
   } else{
-    res.redirect(`/${req.session.passport.user}/tasks`);
+    // get the user's tasks
+    console.log(req.session.passport.user)
+    console.log(req.session.passport.user.tasks)
+    // res.redirect(`/${req.session.passport.user}/tasks`);
+    console.log("Testoooo", req.session.passport.user.tasks)
+    res.json(req.session.passport.user.tasks);
   }
 });
 
 router.get("/:userId/tasks", (req, res) => {
   User.findById(req.params.userId)
     .then(user => {
-      res.send(user.tasks);
+      console.log(req.session)
+      res.json(user.tasks);
     });
 });
 
@@ -110,8 +116,11 @@ router.put("/tasks/edit/:taskId", (req, res) => {
     });
 });
 
-router.post("/sign-up", passport.authenticate("local-signup"), function(req, res){
-  res.send("woot");
+router.post("/sign-up", passport.authenticate("local-signup"), async function(req, res){
+  console.log(req.session.passport);
+  const user = await User.findById(req.session.passport.user);
+  console.log(user.tasks)
+  res.json(user.tasks);
 });
 
 router.get("/sign-up", (req, res) => {

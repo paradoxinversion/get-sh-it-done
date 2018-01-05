@@ -78,7 +78,10 @@ h1 {
   margin:0 1rem;
   text-decoration: none;
 }
-
+.task-edit{
+  width: 100%;
+  border: none;
+}
 .modal-container{
   background-color: grey;
   position: absolute;

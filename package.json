@@ -5,7 +5,8 @@
   "main": "./src/server.js",
   "scripts": {
     "watch": "webpack --progress --colors --watch -d",
-    "build": "webpack --progress --colors -p"
+    "build": "webpack --progress --colors -p",
+    "start": "nodemon"
   },
   "author": "Jedai Saboteur",
   "license": "ISC",

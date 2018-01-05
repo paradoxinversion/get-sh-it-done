@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 class MutableFieldButton extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       isButtonPressed: false,
       value: ''
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
     this.submit = this.submit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event){
-    this.setState({value: event.target.value})
+    this.setState({value: event.target.value});
   }
   toggleFieldButton(){
     this.setState(previousState => ({
@@ -41,12 +42,10 @@ class MutableFieldButton extends React.Component {
             onChange={this.handleChange} />
         </form>
       );
-
-
     }else {
       return (
         <button onClick={this.handleClick} className="todo-input-button">
-          do some shit [react version]
+          do some shit
         </button>
       );
     }

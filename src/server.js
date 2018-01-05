@@ -32,55 +32,51 @@ app.use(session({
 
 const User = require("./controllers/User");
 passport.use("local-signup", new LocalStrategy(
-  function(username, password, done){
-    console.log("Attempting to add user");
-    User.findOne({username})
-      .then(async (error, user) => {
-        console.log(`User found by ${username}:: ${user}`);
-        if (error){
-          console.log("Error happened");
-          return done(error);
-        }
-        if (user){
-          console.log("User Exists");
-          return done (null, false);
-        }else{
-          const newUser = new User({
-            username
-          });
-          newUser.password = await newUser.generateHash(password);
-          newUser.save(function(err){
-            if (err) throw err;
-            console.log("User saved");
-            return done(null, newUser);
-          });
-        }
-      })
-      .catch(e => {
-        throw e;
-      });
+  async function(username, password, done){
+    console.log("Attempting to add a new user.");
+    const existingUser = await User.findOne({username});
+
+    if (existingUser !== null){
+      console.error(`User already exists by the username ${username}.`)
+      return done(null, false);
+    }
+
+    const newUser = new User({ username });
+    newUser.password = await newUser.generateHash(password);
+
+    try{
+      await newUser.save();
+      console.log("New User Saved");
+      return done (null, newUser)
+    } catch (e){
+      throw e;
+    }
   }
 ));
 
 passport.use("local-login", new LocalStrategy(
-  function(username, password, done){
-    console.log("Running login");
-    User.findOne({username})
-      .then(async (user) => {
-        if (!user){
-          return done(null, false);
-        }else{
-          const validPassword = await user.validatePassword(password);
-          if (validPassword){
-            return done(null, user);
-          } else{
-            return done(null, false);
-          }
-        }
-      })
-      .catch(e => {
-        return done(e);
-      });
+  async function(username, password, done){
+    console.log(`Attempting to log in user with the name ${username}`);
+    try{
+      const user = await User.findOne({username});
+      if (user === null){
+        console.log("User does not exist");
+        return done(null, false);
+      }
+
+      const isValidPassword = await user.validatePassword(password);
+      if (!isValidPassword){
+        console.log("Invalid password submission");
+        return done(null, false);
+      }
+
+      console.log(`User & Password valid, logging in ${username}`);
+      return done(null, user)
+    } catch (e){
+      console.log("An error occured during login.")
+      return done(e);
+    }
+
   }
 ));
 
@@ -88,12 +84,12 @@ passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-// used to deserialize the user
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
   });
 });
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -102,7 +98,6 @@ const mongooseOptions = {
   useMongoClient: true
 };
 
-// console.log(models("Task").schema);
 mongoose.connect("mongodb://localhost/todo", mongooseOptions);
 
 // Set Routes
@@ -123,4 +118,4 @@ app.use(function(err, req, res, next){
 });
 
 // Start the Server
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.listen(3000, () => console.log('App Running'));
