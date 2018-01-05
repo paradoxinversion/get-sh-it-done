@@ -1,0 +1,2 @@
+- NPM Install
+- Run mongod
